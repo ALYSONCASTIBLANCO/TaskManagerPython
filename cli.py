@@ -10,12 +10,15 @@ def show_tasks():
     tasks=watch_tasks()
     headers=["ID", "Task Name", "Date", "Status"]
     data=[]
-    for x, obj in tasks.items():
-        new_row = []
-        new_row.append(x)
-        for y in obj:
-            new_row.append(obj[y])
-        data.append(new_row)
+    if len(tasks.items()) == 0:
+        data = []
+    else:
+        for x, obj in tasks.items():
+            new_row = []
+            new_row.append(x)
+            for y in obj:
+                new_row.append(obj[y])
+            data.append(new_row)
     print(" ")
     print("🚨 Hey! Your tasks list is:")
     print(tabulate(data, headers=headers, tablefmt="grid"))

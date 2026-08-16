@@ -3,9 +3,12 @@ import json
 def watch_tasks():
     #I use this option to open the JSON file in read mode to render the tasks 
     #for visualization.
-    with open("tasks.json", "r") as file:
-        tasks = json.load(file)
-    return tasks
+    try:
+        with open("tasks.json", "r") as file:
+            tasks = json.load(file)
+        return tasks
+    except json.JSONDecodeError:
+        return {}
 
 def update_json(tasks):
     #Re-writing the new JSON with the edited dictionary
