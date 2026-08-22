@@ -11,9 +11,22 @@ def watch_tasks():
         return {}
 
 def update_json(tasks):
-    #Re-writing the new JSON with the edited dictionary
-    with open("tasks.json", mode="w", encoding="utf-8") as write_file:
-        json.dump(tasks, write_file)
+    try:
+        #Re-writing the new JSON with the edited dictionary
+        with open("tasks.json", mode="w", encoding="utf-8") as write_file:
+            json.dump(tasks, write_file)
+    except PermissionError:
+        raise PermissionError(
+            "You don't have permission to modify tasks.json."
+        )
+
+    except TypeError:
+        raise TypeError(
+            "The tasks contain data that cannot be saved as JSON."
+        )
+
+    except OSError as e:
+        raise OSError(f"Could not save tasks.json: {e}")
 
 def add_task(task:str, date:str, status:str) -> str:
     new_id = 0
