@@ -82,3 +82,56 @@ def delete_task(id):
     update_json(tasks)
     
     return f"The task was deleted successfully 🗑️"
+
+#The operations for the login system:
+def watch_users():
+    #I use this option to open the JSON file in read mode to render the tasks 
+    #for visualization.
+    try:
+        with open("users.json", "r") as file:
+            users = json.load(file)
+        return users
+    except json.JSONDecodeError:
+        return {}
+
+def update_users(user):
+    try:
+        #Re-writing the new JSON with the edited dictionary
+        with open("users.json", mode="w", encoding="utf-8") as write_file:
+            json.dump(user, write_file)
+    except PermissionError:
+        raise PermissionError(
+            "You don't have permission to modify tasks.json."
+        )
+
+    except TypeError:
+        raise TypeError(
+            "The tasks contain data that cannot be saved as JSON."
+        )
+
+    except OSError as e:
+        raise OSError(f"Could not save users.json: {e}")
+
+
+def send_user_info(user:str, pw:str) -> str:
+    new_id = 0
+    users = watch_users()
+    #Conditional to validate if we find users
+    if users:
+        #Validating if the user exists in the data storage file.
+        for x, obj in users.items():
+            #If exists, break the flow returning the message.
+            if obj["user"] == user:
+                return "The user already exist, try again with another user."
+            
+        #To create the id to store in de DB, we take the highest value in the list of
+        #Items and we will add one
+        new_id = str(max(map(int, users.keys())) + 1)
+    else:
+        #If is the first value, the ID will be 1
+        new_id = "1"
+    #Updating the JSON before to send
+    users.update({str(new_id): {"user":user, "password":pw}})
+    #Re-writing the new JSON with the edited dictionary
+    update_users(users)
+    return("User created successfully! 👍")
