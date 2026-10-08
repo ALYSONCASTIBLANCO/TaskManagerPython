@@ -16,5 +16,8 @@ def verify_credentials(username:str, password:str) -> bool:
                     return True
                 else:
                     return False
+        #This return False is important because covers the case: What happen if the typed user is
+        #not found?
+        return False
     else:
         return False
