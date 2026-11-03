@@ -1,10 +1,16 @@
 import json
 
+from pathlib import Path
+
+#Using absolute routes to ensure that all the project levels can access to the information
+TASKS_FILE = Path(__file__).resolve().parent / "tasks.json"
+USERS_FILE = Path(__file__).resolve().parent / "users.json"
+
 def watch_tasks():
     #I use this option to open the JSON file in read mode to render the tasks 
     #for visualization.
     try:
-        with open("tasks.json", "r") as file:
+        with open(TASKS_FILE, "r") as file:
             tasks = json.load(file)
         return tasks
     except json.JSONDecodeError:
@@ -13,7 +19,7 @@ def watch_tasks():
 def update_json(tasks):
     try:
         #Re-writing the new JSON with the edited dictionary
-        with open("tasks.json", mode="w", encoding="utf-8") as write_file:
+        with open(TASKS_FILE, mode="w", encoding="utf-8") as write_file:
             json.dump(tasks, write_file)
     except PermissionError:
         raise PermissionError(
@@ -88,7 +94,7 @@ def watch_users():
     #I use this option to open the JSON file in read mode to render the tasks 
     #for visualization.
     try:
-        with open("users.json", "r") as file:
+        with open(USERS_FILE, "r") as file:
             users = json.load(file)
         return users
     except json.JSONDecodeError:
@@ -97,7 +103,7 @@ def watch_users():
 def update_users(user):
     try:
         #Re-writing the new JSON with the edited dictionary
-        with open("users.json", mode="w", encoding="utf-8") as write_file:
+        with open(USERS_FILE, mode="w", encoding="utf-8") as write_file:
             json.dump(user, write_file)
     except PermissionError:
         raise PermissionError(

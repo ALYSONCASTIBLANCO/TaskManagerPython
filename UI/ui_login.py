@@ -1,6 +1,10 @@
 #Importing Streamlit library for working with it
 import streamlit as st
 
+#Modifying the Browser tab: If you want to change the emoji, access to the emoji shortcodes:
+#https://streamlit-emoji-shortcodes-streamlit-app-gwckff.streamlit.app/
+st.set_page_config(page_title="TaskManager - Login", page_icon=":rocket:")
+
 #This is a test function to understand what could happen when I click in the button:
 def verify_login(username: str, password: str):
     if username and password:
