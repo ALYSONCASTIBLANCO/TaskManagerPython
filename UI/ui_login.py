@@ -1,27 +1,13 @@
 #Importing Streamlit library for working with it
 import streamlit as st
-#Temporal modification for accessing to the data
-import sys
-from pathlib import Path
-
-project_root = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(project_root))
 
 #Importing the authentication flow already done previously (can you see how beautiful is the responsibilities separation baby?)
 from auth import verify_credentials
 
-#Modifying the Browser tab: If you want to change the emoji, access to the emoji shortcodes:
-#https://streamlit-emoji-shortcodes-streamlit-app-gwckff.streamlit.app/
-st.set_page_config(page_title="TaskManager - Login", page_icon=":rocket:")
 # Declare alias for st.session_state, just for convenience. The session state is important because
 #Keeps the information available between reruns, and I can access to the element in an easier way.
 #Use callbacks to update state when interacting with widgets.
-#NOTE: The state here is temporal. Later, we will move to the app.py file
 state = st.session_state
-
-#We will initialize the authenticated state, and we will avoid to keep a past state in the future.
-if "authenticated" not in state:
-    state.authenticated = False
 
 #Encapsulating the login in a function for using in app.py
 def show_login():
@@ -48,8 +34,11 @@ def show_login():
                 #Store the value in the session state if the login process is true
                 state.authenticated = True
                 st.success("Welcome to Task Manager! Redirecting to your dashboard...")
+                #Once is authenticated, rerun the application to watch the dashboard
+                st.rerun()
 
             else:
                 #Store the value in the session state if the login process is false
                 state.authenticated = False
                 st.error("Invalid credentials! Verify your information and try again")
+    
