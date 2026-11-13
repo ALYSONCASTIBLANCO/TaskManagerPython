@@ -41,9 +41,13 @@ def delete_current_task(id): #We will require directly the ID because when we cl
     st.rerun()
 
 def add_new_task():
-    add_task(state.task_title, str(state.task_date), state.select_status)
-    #Once is added, we will refresh the page
-    st.rerun()
+    #Verifying that the Task title is not empty:
+    if state.task_title:
+        add_task(state.task_title, str(state.task_date), state.select_status)
+        #Once is added, we will refresh the page
+        st.rerun()
+    else:
+        st.warning("Please, type the name of your task!", width="stretch")
 
 def edit_task():
     fields = {}
