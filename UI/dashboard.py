@@ -49,18 +49,30 @@ def edit_task():
     #Once is edited, we will refresh the page
     st.rerun()
 
+#Logout function to go to the login again:
+def logout():
+    state.authenticated = False
+    st.rerun()
+
 def show_dashboard():
     if state.authenticated:
         #Inserting a container (imagine that is similar to a div in HTML. Contains a group of elements for
         #a better manipulation.)
-        with st.container(horizontal_alignment="center"):
-            st.title(
+        with st.container(horizontal=True, vertical_alignment="bottom"):
+            st.header(
                 #Here we can modify the image besides the title. Material is a Google UI library.
                 #You can check the names here: https://fonts.google.com/icons?icon.style=Rounded
                 ":red[:material/rocket_launch:] Welcome user! Your tasks here",
-                width="content",
+                width="stretch",
                 anchor=False,
             )
+
+            #Logout button
+            st.button("Logout",
+                icon = ":material/logout:",
+                type="tertiary",
+                on_click=logout,
+                )
 
         #Inserting the form for adding a new item (Check the items that your JSON file object receives:)
         with st.form(key="new_item_form", border=False):

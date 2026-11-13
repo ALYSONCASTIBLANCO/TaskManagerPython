@@ -14,8 +14,6 @@ state = st.session_state
 if "authenticated" not in state:
     state.authenticated = False
 
-st.write("SESSION STATE:", state)
-
 def main():
     """Main function of the program."""
     #This state is now shared. As you remember, authenticated is changing when you inteact with the login, for that reason
